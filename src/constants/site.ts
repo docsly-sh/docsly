@@ -7,7 +7,7 @@ const getBaseUrl = () => {
     return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`;
   }
 
-  return process.env.SITE_URL ?? "https://docsly.sh";
+  return process.env.SITE_URL ?? "https://docsly.dev";
 };
 
 const baseUrl = getBaseUrl();
@@ -25,7 +25,7 @@ export const SITE = {
     "next.js",
     "mdx",
   ] as const,
-  NAME: "docsly.sh",
+  NAME: "docsly.dev",
   SHORT_NAME: "Docsly",
   OG_IMAGE: `${baseUrl}/og.png`,
   URL: baseUrl,

@@ -2,7 +2,7 @@
 
 Open-source documentation starter for Next.js. Beautiful, fast, and ready to ship.
 
-**[docsly.sh](https://docsly.sh)** · **[Documentation](https://docsly.sh/docs)** · **[GitHub](https://github.com/docsly-sh/docsly)**
+**[docsly.dev](https://docsly.dev)** · **[Documentation](https://docsly.dev/docs)** · **[GitHub](https://github.com/docsly-sh/docsly)**
 
 ## Features
 
@@ -55,11 +55,11 @@ source.config.ts    # Fumadocs MDX config
 
 ## Documentation
 
-Full documentation is available at [docsly.sh/docs](https://docsly.sh/docs), including guides for customization, deployment, and MDX components.
+Full documentation is available at [docsly.dev/docs](https://docsly.dev/docs), including guides for customization, deployment, and MDX components.
 
 ## Contributing
 
-Contributions are welcome. See the [contributing guide](https://docsly.sh/docs/contributing) for details.
+Contributions are welcome. See the [contributing guide](https://docsly.dev/docs/contributing) for details.
 
 ## License
 

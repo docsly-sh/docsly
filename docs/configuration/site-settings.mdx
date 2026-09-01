@@ -9,7 +9,7 @@ Global site settings live in `src/constants/site.ts`. This is the first file to 
 
 ```ts title="src/constants/site.ts"
 export const SITE = {
-  NAME: "docsly.sh",
+  NAME: "docsly.dev",
   SHORT_NAME: "Docsly",
   DESCRIPTION: {
     SHORT: "Open-source docs that ship fast",
@@ -44,7 +44,7 @@ The site URL is resolved automatically:
 - **Other hosts** — Set `SITE_URL` in your environment
 
 ```ts
-return process.env.SITE_URL ?? "https://docsly.sh";
+return process.env.SITE_URL ?? "https://docsly.dev";
 ```
 
 This URL powers canonical links, Open Graph metadata, and LLM export URLs via `src/seo/metadata.ts`.
@@ -70,7 +70,7 @@ description: Clone docsly and run it locally.
 ---
 ```
 
-The docs page template passes these to `createPageMetadata()` for per-page SEO, producing titles like `Installation | docsly.sh`.
+The docs page template passes these to `createPageMetadata()` for per-page SEO, producing titles like `Installation | docsly.dev`.
 
 ## Open Graph image
 

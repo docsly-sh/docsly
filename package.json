@@ -8,7 +8,7 @@
     "type": "git",
     "url": "https://github.com/docsly-sh/docsly"
   },
-  "homepage": "https://docsly.sh",
+  "homepage": "https://docsly.dev",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
