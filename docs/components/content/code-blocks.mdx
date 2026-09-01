@@ -1,0 +1,33 @@
+---
+title: Code blocks
+description: Syntax-highlighted code with optional titles and copy buttons.
+---
+
+Code blocks use Shiki via `rehype-pretty-code`. Add a language tag after the opening fence.
+
+## Inline code
+
+Use backticks for `inline code` within a sentence.
+
+## Fenced blocks
+
+```bash
+pnpm install
+pnpm dev
+```
+
+## With a title
+
+```tsx title="components/example.tsx"
+export function Example({ title }: { title: string }) {
+  return <h1>{title}</h1>;
+}
+```
+
+## Package manager tabs
+
+For install commands, use the `<Tabs>` component to show pnpm, npm, and yarn variants — see [Tabs](/docs/components/interactive/tabs).
+
+## Copy button
+
+Multi-line code blocks automatically include a copy button when processed by `rehype-pretty-code`. The button is rendered by the custom `code` component in `src/mdx-components.tsx`.

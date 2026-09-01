@@ -1,0 +1,92 @@
+/**
+ * Docsly color scheme
+ *
+ * Palette hues are controlled from src/constants/theme.ts via --theme-hue
+ * and --theme-accent-hue. Change ACTIVE_COLOR_PRESET there to retheme the site.
+ *
+ * For fine-grained control, edit the oklch values below directly.
+ */
+
+:root {
+  --background: oklch(0.993 0.002 var(--theme-hue));
+  --foreground: oklch(0.132 0.006 var(--theme-hue));
+  --card: oklch(0.993 0.002 var(--theme-hue));
+  --card-foreground: oklch(0.132 0.006 var(--theme-hue));
+  --popover: oklch(0.993 0.002 var(--theme-hue));
+  --popover-foreground: oklch(0.132 0.006 var(--theme-hue));
+  --primary: oklch(0.188 0.008 var(--theme-hue));
+  --primary-foreground: oklch(0.985 0.003 var(--theme-hue));
+  --secondary: oklch(0.965 0.004 var(--theme-hue));
+  --secondary-foreground: oklch(0.188 0.008 var(--theme-hue));
+  --muted: oklch(0.965 0.004 var(--theme-hue));
+  --muted-foreground: oklch(0.528 0.014 var(--theme-hue));
+  --accent: oklch(0.958 0.006 var(--theme-hue));
+  --accent-foreground: oklch(0.188 0.008 var(--theme-hue));
+  --destructive: oklch(0.58 0.22 28);
+  --border: oklch(0.908 0.006 var(--theme-hue));
+  --input: oklch(0.908 0.006 var(--theme-hue));
+  --ring: oklch(0.692 0.012 var(--theme-hue));
+  --chart-1: oklch(0.82 0.1 var(--theme-accent-hue));
+  --chart-2: oklch(0.64 0.16 var(--theme-accent-hue));
+  --chart-3: oklch(0.56 0.18 var(--theme-accent-hue));
+  --chart-4: oklch(0.48 0.17 var(--theme-accent-hue));
+  --chart-5: oklch(0.4 0.14 var(--theme-accent-hue));
+  --sidebar: oklch(0.988 0.002 var(--theme-hue));
+  --sidebar-foreground: oklch(0.132 0.006 var(--theme-hue));
+  --sidebar-primary: oklch(0.188 0.008 var(--theme-hue));
+  --sidebar-primary-foreground: oklch(0.985 0.003 var(--theme-hue));
+  --sidebar-accent: oklch(0.958 0.006 var(--theme-hue));
+  --sidebar-accent-foreground: oklch(0.188 0.008 var(--theme-hue));
+  --sidebar-border: oklch(0.908 0.006 var(--theme-hue));
+  --sidebar-ring: oklch(0.692 0.012 var(--theme-hue));
+  --surface: oklch(0.972 0.004 var(--theme-hue));
+  --surface-foreground: var(--foreground);
+  --code: var(--surface);
+  --code-foreground: var(--surface-foreground);
+  --code-highlight: oklch(0.952 0.005 var(--theme-hue));
+  --code-number: oklch(0.548 0.012 var(--theme-hue));
+  --selection: oklch(0.132 0.006 var(--theme-hue));
+  --selection-foreground: oklch(0.993 0.002 var(--theme-hue));
+}
+
+.dark {
+  --background: oklch(0.138 0.008 var(--theme-hue));
+  --foreground: oklch(0.972 0.004 var(--theme-hue));
+  --card: oklch(0.198 0.012 var(--theme-hue));
+  --card-foreground: oklch(0.972 0.004 var(--theme-hue));
+  --popover: oklch(0.258 0.014 var(--theme-hue));
+  --popover-foreground: oklch(0.972 0.004 var(--theme-hue));
+  --primary: oklch(0.912 0.006 var(--theme-hue));
+  --primary-foreground: oklch(0.198 0.012 var(--theme-hue));
+  --secondary: oklch(0.258 0.014 var(--theme-hue));
+  --secondary-foreground: oklch(0.972 0.004 var(--theme-hue));
+  --muted: oklch(0.258 0.014 var(--theme-hue));
+  --muted-foreground: oklch(0.688 0.016 var(--theme-hue));
+  --accent: oklch(0.358 0.018 var(--theme-hue));
+  --accent-foreground: oklch(0.972 0.004 var(--theme-hue));
+  --destructive: oklch(0.695 0.175 25);
+  --border: oklch(0.972 0.004 var(--theme-hue) / 11%);
+  --input: oklch(0.972 0.004 var(--theme-hue) / 14%);
+  --ring: oklch(0.548 0.014 var(--theme-hue));
+  --chart-1: oklch(0.78 0.12 var(--theme-accent-hue));
+  --chart-2: oklch(0.66 0.17 var(--theme-accent-hue));
+  --chart-3: oklch(0.58 0.18 var(--theme-accent-hue));
+  --chart-4: oklch(0.5 0.16 var(--theme-accent-hue));
+  --chart-5: oklch(0.42 0.13 var(--theme-accent-hue));
+  --sidebar: oklch(0.198 0.012 var(--theme-hue));
+  --sidebar-foreground: oklch(0.972 0.004 var(--theme-hue));
+  --sidebar-primary: oklch(0.62 0.16 var(--theme-accent-hue));
+  --sidebar-primary-foreground: oklch(0.972 0.004 var(--theme-hue));
+  --sidebar-accent: oklch(0.258 0.014 var(--theme-hue));
+  --sidebar-accent-foreground: oklch(0.972 0.004 var(--theme-hue));
+  --sidebar-border: oklch(0.972 0.004 var(--theme-hue) / 11%);
+  --sidebar-ring: oklch(0.548 0.014 var(--theme-hue));
+  --surface: oklch(0.192 0.012 var(--theme-hue));
+  --surface-foreground: oklch(0.688 0.016 var(--theme-hue));
+  --code: var(--surface);
+  --code-foreground: var(--surface-foreground);
+  --code-highlight: oklch(0.262 0.014 var(--theme-hue));
+  --code-number: oklch(0.708 0.014 var(--theme-hue));
+  --selection: oklch(0.912 0.006 var(--theme-hue));
+  --selection-foreground: oklch(0.198 0.012 var(--theme-hue));
+}

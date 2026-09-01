@@ -1,0 +1,81 @@
+---
+title: Site settings
+description: Configure site name, metadata, and theme defaults.
+---
+
+Global site settings live in `src/constants/site.ts`. This is the first file to edit when customizing docsly for your project.
+
+## Site identity
+
+```ts title="src/constants/site.ts"
+export const SITE = {
+  NAME: "docsly.sh",
+  SHORT_NAME: "Docsly",
+  DESCRIPTION: {
+    SHORT: "Open-source docs that ship fast",
+    LONG: "An open-source documentation starter for Next.js — beautiful, fast, and ready to ship.",
+  },
+  KEYWORDS: [
+    "docsly",
+    "documentation",
+    "open source",
+    "fumadocs",
+    "next.js",
+    "mdx",
+  ],
+  // ...
+};
+```
+
+| Field | Used for |
+| --- | --- |
+| `NAME` | Page titles, header logo text, Open Graph site name |
+| `SHORT_NAME` | PWA manifest, compact displays |
+| `DESCRIPTION.SHORT` | Tagline, meta description fallback |
+| `DESCRIPTION.LONG` | Homepage description, `llms-full.txt` header |
+| `KEYWORDS` | SEO meta keywords |
+
+## Base URL
+
+The site URL is resolved automatically:
+
+- **Development** — `http://localhost:3000`
+- **Vercel** — Uses `VERCEL_PROJECT_PRODUCTION_URL`
+- **Other hosts** — Set `SITE_URL` in your environment
+
+```ts
+return process.env.SITE_URL ?? "https://docsly.sh";
+```
+
+This URL powers canonical links, Open Graph metadata, and LLM export URLs via `src/seo/metadata.ts`.
+
+## Theme colors
+
+Color schemes are configured in `src/constants/theme.ts`. Change one line to switch presets:
+
+```ts
+export const ACTIVE_COLOR_PRESET: ColorPreset = "blue";
+```
+
+See the [Colors](/docs/configuration/colors) guide for all presets, overrides, and fine-grained control.
+
+## Page metadata
+
+Each MDX page sets its own `title` and `description` in frontmatter:
+
+```mdx
+---
+title: Installation
+description: Clone docsly and run it locally.
+---
+```
+
+The docs page template passes these to `createPageMetadata()` for per-page SEO, producing titles like `Installation | docsly.sh`.
+
+## Open Graph image
+
+The default OG image is `/og.png` in `public/`. Replace it with a 1200×630 image for your project. The URL is constructed as `${SITE.URL}/og.png` in `SITE.OG_IMAGE`.
+
+## Web manifest
+
+PWA metadata is in `public/site.webmanifest`. Update `name`, `short_name`, and `description` to match your site constants.

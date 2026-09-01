@@ -1,0 +1,105 @@
+---
+title: Installation
+description: Clone docsly, install dependencies, and run the docs site locally.
+---
+
+Get docsly running on your machine in under a minute.
+
+## Prerequisites
+
+- **Node.js** 20 or later
+- **pnpm** (recommended), npm, or yarn
+
+## Clone and install
+
+```bash
+git clone https://github.com/docsly-sh/docsly.git
+cd docsly
+pnpm install
+```
+
+The `postinstall` script runs `fumadocs-mdx` to generate the content source map in `.source/`.
+
+## Start the dev server
+
+```bash
+pnpm dev
+```
+
+The site starts at [http://localhost:3000](http://localhost:3000). The root URL redirects to `/docs`.
+
+## Build for production
+
+```bash
+pnpm build
+pnpm start
+```
+
+Run `pnpm typecheck` to verify TypeScript without emitting files.
+
+## Project structure
+
+```text
+docsly/
+├── content/docs/           # MDX documentation pages
+│   ├── (root)/             # Get Started section
+│   ├── guides/
+│   ├── configuration/
+│   └── components/
+├── public/                 # Static assets (favicon, logo, OG image)
+├── src/
+│   ├── app/                # Next.js App Router routes
+│   │   ├── (app)/docs/     # Docs layout and [[...slug]] page
+│   │   ├── api/search/     # Search API endpoint
+│   │   ├── llms.md/        # Per-page LLM markdown exports
+│   │   └── llms-full.txt/  # Full-site LLM export
+│   ├── components/         # UI components (sidebar, search, header)
+│   ├── constants/          # Site config, routes, navigation
+│   ├── lib/                # Source loader, utilities
+│   ├── mdx-components.tsx  # Global MDX component registry
+│   └── styles/             # Global CSS and theme tokens
+├── source.config.ts        # Fumadocs MDX config
+└── next.config.mjs
+```
+
+Content lives in `content/docs/`. Everything in `src/` is the application shell that renders it.
+
+## Add a new page
+
+<Steps>
+
+<Step>Create an MDX file</Step>
+
+Add a file like `content/docs/guides/my-page.mdx`:
+
+```mdx
+---
+title: My Page
+description: A short description for SEO and the sidebar.
+---
+
+Your content here.
+```
+
+<Step>Register it in meta.json</Step>
+
+Update `content/docs/guides/meta.json`:
+
+```json
+{
+  "title": "Guides",
+  "pages": ["index", "markdown", "writing", "my-page"]
+}
+```
+
+<Step>Restart the dev server</Step>
+
+Fumadocs regenerates the page tree on startup. Your new page appears in the sidebar automatically.
+
+</Steps>
+
+<Callout type="info" title="No route registration needed">
+
+Page URLs are derived from file paths. `content/docs/guides/my-page.mdx` becomes `/docs/guides/my-page`. The `meta.json` files control sidebar order and section titles only.
+
+</Callout>

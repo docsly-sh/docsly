@@ -1,0 +1,115 @@
+---
+title: MDX components
+description: Register and customize global components for your MDX pages.
+---
+
+Every component in `src/mdx-components.tsx` is available in all `.mdx` files without imports. This page explains how the registry works and how to extend it.
+
+## How it works
+
+Fumadocs passes the `mdxComponents` object to every MDX page renderer:
+
+```tsx title="src/app/(app)/docs/[[...slug]]/page.tsx"
+<MdxContent components={mdxComponents} />
+```
+
+Any key in `mdxComponents` becomes a JSX tag you can use in MDX content.
+
+## Built-in components
+
+### Documentation components
+
+| Component | Description |
+| --- | --- |
+| `Callout` | Info, warning, and error callouts |
+| `Tabs`, `TabsList`, `TabsTrigger`, `TabsContent` | Tabbed content panels |
+| `Accordion`, `AccordionItem`, `AccordionTrigger`, `AccordionContent` | Collapsible sections |
+| `Steps`, `Step` | Numbered step-by-step guides |
+| `FeatureCard` | Icon + title + description card |
+| `CodeTabs` | Tabbed code block groups |
+
+### Styled HTML elements
+
+Standard markdown elements are overridden with Tailwind styles:
+
+- Headings (`h1`–`h6`) — typography and scroll margins
+- `code` — inline and block with copy button support
+- `pre`, `figure`, `figcaption` — code block containers
+- `table`, `th`, `td`, `tr` — bordered, scrollable tables
+- `a`, `Link` — underlined links
+- `blockquote`, `ul`, `ol`, `li`, `p`, `hr`, `img` — prose styling
+
+## Add a custom component
+
+<Steps>
+
+<Step>Define the component</Step>
+
+```tsx title="src/mdx-components.tsx"
+const Banner = ({ children }: { children: React.ReactNode }) => (
+  <div className="rounded-lg border bg-muted p-4 my-6">{children}</div>
+);
+```
+
+<Step>Register it</Step>
+
+```tsx
+export const mdxComponents = {
+  // ...existing components
+  Banner,
+};
+```
+
+<Step>Use it in MDX</Step>
+
+```mdx
+<Banner>
+
+This is a custom banner component.
+
+</Banner>
+```
+
+</Steps>
+
+## Code block enhancements
+
+The custom `code` component in `mdx-components.tsx` handles several special cases:
+
+- **Inline code** — detected when content has no newlines, gets a muted background
+- **Copy button** — added to multi-line blocks via `__raw__` metadata from `rehype-pretty-code`
+- **Package manager tabs** — when `__npm__`, `__yarn__`, `__pnpm__`, and `__bun__` are set, renders a `CodeBlockCommand` with tab switching
+
+Syntax highlighting is configured in `source.config.ts` using Shiki themes (`github-light-default` and `github-dark`).
+
+## Syntax highlighting config
+
+```ts title="source.config.ts"
+rehypePlugins: (plugins) => {
+  plugins.push([
+    rehypePrettyCode,
+    {
+      theme: {
+        dark: "github-dark",
+        light: "github-light-default",
+      },
+      transformers,
+    },
+  ]);
+  return plugins;
+},
+```
+
+Custom transformers in `src/lib/highlight-code.ts` add line highlighting and other enhancements.
+
+## Frontmatter schema
+
+The frontmatter schema is extended in `source.config.ts`:
+
+```ts
+schema: frontmatterSchema.extend({
+  date: z.string().or(z.date()).optional(),
+}),
+```
+
+Add custom frontmatter fields here and they'll be typed in the generated source.

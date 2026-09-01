@@ -1,0 +1,34 @@
+---
+title: Callout
+description: Highlight tips, warnings, and important notes in your docs.
+---
+
+Callouts draw attention to important information without breaking the reading flow.
+
+## Basic usage
+
+<Callout type="info">
+
+This is a default info callout. Use it for helpful context and tips.
+
+</Callout>
+
+## With a title
+
+<Callout type="warning" title="Breaking change">
+
+APIs marked as deprecated will be removed in the next major release.
+
+</Callout>
+
+## Syntax
+
+```mdx
+<Callout type="info" title="Optional title">
+
+Your message here.
+
+</Callout>
+```
+
+The `type` prop maps to the underlying Alert variant. Common values: `info`, `warning`, `error`.

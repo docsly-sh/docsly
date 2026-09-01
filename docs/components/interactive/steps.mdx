@@ -1,0 +1,41 @@
+---
+title: Steps
+description: Numbered step-by-step instructions for tutorials and guides.
+---
+
+The `<Steps>` and `<Step>` components create a numbered vertical timeline — ideal for setup guides and how-tos.
+
+## Example
+
+<Steps>
+
+<Step>Install dependencies</Step>
+
+```bash
+pnpm install
+```
+
+<Step>Start the dev server</Step>
+
+```bash
+pnpm dev
+```
+
+<Step>Open the site</Step>
+
+Visit [http://localhost:3000/docs](http://localhost:3000/docs) in your browser.
+
+</Steps>
+
+## Syntax
+
+```mdx
+<Steps>
+  <Step>First step title</Step>
+  Content for step one.
+  <Step>Second step title</Step>
+  Content for step two.
+</Steps>
+```
+
+Each `<Step>` renders as a numbered heading. Place content directly after each step title.

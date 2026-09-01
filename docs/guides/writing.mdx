@@ -1,0 +1,59 @@
+---
+title: Writing docs
+description: Best practices for writing clear, useful documentation.
+---
+
+Good documentation helps people accomplish their goals quickly. Here are some principles to follow.
+
+## Start with the reader
+
+Before writing, ask:
+
+- Who is reading this?
+- What do they want to accomplish?
+- What do they already know?
+
+Write for that person, not for yourself.
+
+## Structure pages clearly
+
+Every page should have:
+
+1. A **title** and **description** in frontmatter
+2. A short intro explaining what the page covers
+3. Logical sections with `##` headings
+4. Examples where they help
+
+## Use examples liberally
+
+Show, don't just tell. A code snippet or screenshot is worth a thousand words of explanation.
+
+```tsx
+// Good: shows the actual API
+export function greet(name: string) {
+  return `Hello, ${name}!`;
+}
+```
+
+## Keep it scannable
+
+- Use short paragraphs (2–4 sentences)
+- Break up long blocks with headings
+- Use lists for steps or options
+- Highlight key terms with **bold** or `code`
+
+## Link between pages
+
+Connect related content so readers can go deeper:
+
+- Link to [Installation](/docs/installation) when mentioning setup
+- Link to [Markdown & MDX](/docs/guides/markdown) when referencing components
+- Link to [Components](/docs/components) for per-component docs
+- Link to [Configuration](/docs/configuration) when explaining site setup
+- Use descriptive link text ("see the installation guide") instead of "click here"
+
+<Callout type="info" title="Remember">
+
+Documentation is never finished. Update pages when the product changes, and remove content that's no longer accurate.
+
+</Callout>

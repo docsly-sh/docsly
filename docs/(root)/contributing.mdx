@@ -1,0 +1,77 @@
+---
+title: Contributing
+description: How to contribute to docsly — the open-source documentation starter.
+---
+
+docsly is open source and welcomes contributions. Whether you fix a bug, improve documentation, or add a feature, here's how to get involved.
+
+## Repository
+
+Source code lives on GitHub:
+
+**[github.com/docsly-sh/docsly](https://github.com/docsly-sh/docsly)**
+
+## Development setup
+
+<Steps>
+
+<Step>Fork and clone</Step>
+
+```bash
+git clone https://github.com/YOUR_USERNAME/docsly.git
+cd docsly
+pnpm install
+```
+
+<Step>Create a branch</Step>
+
+```bash
+git checkout -b fix/my-improvement
+```
+
+<Step>Start the dev server</Step>
+
+```bash
+pnpm dev
+```
+
+<Step>Make your changes</Step>
+
+Edit code in `src/` or content in `content/docs/`. Restart the dev server after adding or removing MDX files.
+
+<Step>Verify</Step>
+
+```bash
+pnpm typecheck
+pnpm build
+```
+
+</Steps>
+
+## What to contribute
+
+- **Bug fixes** — something broken? Open an issue or submit a PR
+- **Documentation** — improve existing pages or add guides
+- **Components** — new MDX components that benefit all users
+- **Accessibility** — keyboard navigation, screen reader support, contrast
+- **Performance** — faster builds, smaller bundles
+
+## Pull request guidelines
+
+1. **One concern per PR** — keep changes focused
+2. **Update docs** — if you change behavior, update the relevant MDX pages
+3. **Test locally** — run `pnpm build` before submitting
+4. **Write clear commit messages** — describe the why, not just the what
+
+## Reporting issues
+
+When opening an issue, include:
+
+- What you expected to happen
+- What actually happened
+- Steps to reproduce
+- Your environment (OS, Node version, browser)
+
+## License
+
+docsly is released under the [MIT License](https://github.com/docsly-sh/docsly/blob/main/LICENSE). By contributing, you agree that your contributions will be licensed under the same terms.

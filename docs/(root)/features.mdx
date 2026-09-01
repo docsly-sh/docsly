@@ -1,0 +1,99 @@
+---
+title: Features
+description: Everything included in the docsly documentation starter.
+---
+
+docsly ships with a complete set of features for modern documentation sites. This page covers what you get out of the box and where to find it in the codebase.
+
+## Navigation
+
+### Sidebar
+
+The left sidebar is generated from `meta.json` files in `content/docs/`. Sections, page order, and titles are all content-driven — no manual route lists.
+
+Top-level section shortcuts (Introduction, Installation, Guides, etc.) come from `src/constants/docs-sections.ts`.
+
+### Prev / next links
+
+Every docs page includes previous and next links at the bottom and in the toolbar. Fumadocs computes these from the page tree order defined in your `meta.json` files.
+
+### Table of contents
+
+Headings (`##` and deeper) automatically populate a table of contents on the right side of each page. On smaller screens, a dropdown TOC appears in the page toolbar.
+
+## Search
+
+Press **⌘K** (Mac) or **Ctrl+K** (Windows/Linux) to open the search dialog. Search is powered by Fumadocs and indexes all page titles and content.
+
+The search API lives at `src/app/api/search/route.ts`. The client component is `src/components/docs-search.tsx`.
+
+## Dark mode
+
+Light and dark themes are supported with system preference detection. Users can toggle manually via the mode switcher in the header.
+
+Theme tokens are defined in `src/styles/theme.css` and controlled by presets in `src/constants/theme.ts`. Browser chrome colors use `META_THEME_COLORS` from the active preset.
+
+## MDX components
+
+Write documentation with rich components — no imports required:
+
+| Component | Use for |
+| --- | --- |
+| `<Callout>` | Tips, warnings, and notes |
+| `<Tabs>` | Package manager commands, config variants |
+| `<Accordion>` | FAQs and collapsible detail |
+| `<Steps>` | Numbered tutorials and setup guides |
+
+See the [Components](/docs/components) reference for syntax and examples.
+
+## Code blocks
+
+Syntax highlighting is powered by [Shiki](https://shiki.style) via `rehype-pretty-code`. Features include:
+
+- Language detection from fence tags (` ```tsx `, ` ```bash `, etc.)
+- Optional file titles (` ```tsx title="app/page.tsx" `)
+- Copy button on multi-line blocks
+- GitHub Light / GitHub Dark themes
+
+Configuration is in `source.config.ts` and `src/lib/highlight-code.ts`.
+
+## LLM exports
+
+docsly is built for the age of AI-assisted development. Every page is available as clean markdown:
+
+| Endpoint | Description |
+| --- | --- |
+| `/llms.md/docs/{path}/content.md` | Single page as markdown |
+| `/llms-full.txt` | Entire docs site in one file |
+
+The **Copy page** button in the docs toolbar also provides quick links to open the current page in ChatGPT, Claude, Cursor, Perplexity, and other AI tools.
+
+See the [LLM exports guide](/docs/guides/llm-exports) for details.
+
+## Share menu
+
+Each page includes a share dropdown with:
+
+- Copy page URL
+- Copy as markdown
+- Open in ChatGPT, Claude, Cursor, Gemini, and more
+
+Implemented in `src/components/docs-copy-page.tsx` and `src/components/docs-share-menu.tsx`.
+
+## SEO and metadata
+
+- Per-page `title` and `description` from MDX frontmatter
+- Open Graph images (`/og.png`)
+- Canonical URLs resolved from `SITE.URL` in `src/constants/site.ts`
+- `site.webmanifest` for PWA metadata
+
+Metadata generation is handled by `src/seo/metadata.ts`.
+
+## Keyboard shortcuts
+
+| Shortcut | Action |
+| --- | --- |
+| ⌘K / Ctrl+K | Open search |
+| ← / → | Previous / next page (when focused on docs) |
+
+Shortcuts are registered in `src/components/docs-keyboard-shortcuts.tsx`.

@@ -1,0 +1,104 @@
+---
+title: LLM exports
+description: Export documentation as markdown for AI tools and LLM consumption.
+---
+
+docsly includes built-in markdown exports designed for AI-assisted workflows. Every page can be consumed as clean, structured markdown.
+
+## Why LLM exports?
+
+AI tools work best with plain text. Instead of scraping HTML or copying from the browser, docsly serves markdown directly — with page titles, URLs, and processed content.
+
+## Endpoints
+
+### Per-page markdown
+
+Every docs page is available at:
+
+```text
+/llms.md/docs/{path}/content.md
+```
+
+For example:
+
+| Page | Markdown URL |
+| --- | --- |
+| Introduction | `/llms.md/docs/content.md` |
+| Installation | `/llms.md/docs/installation/content.md` |
+| Markdown guide | `/llms.md/docs/guides/markdown/content.md` |
+
+Each export includes:
+
+- Page title
+- Canonical URL
+- Source markdown URL
+- Page description
+- Full processed content (headings, code blocks, text)
+
+### Full-site export
+
+The entire documentation site is available as a single file:
+
+```text
+/llms-full.txt
+```
+
+This concatenates every page with `---` separators. Useful for feeding an entire docs site into an LLM context window.
+
+## Copy page button
+
+Every docs page has a **Copy page** dropdown in the toolbar with options to:
+
+- Copy the page URL
+- Copy the page as markdown
+- Open in ChatGPT, Claude, Cursor, Gemini, Perplexity, and more
+
+The "open in AI" links construct prompts that include the page URL so the model can fetch the markdown content.
+
+## Implementation
+
+LLM export logic lives in `src/lib/source.ts`:
+
+```ts
+export const getLLMText = async (page: DocPage) => { /* ... */ };
+export const getLLMFullText = async () => { /* ... */ };
+```
+
+Routes are defined in:
+
+- `src/app/llms.md/docs/[[...slug]]/route.ts` — per-page exports
+- `src/app/llms-full.txt/route.ts` — full-site export
+
+## Using with AI tools
+
+### Cursor
+
+Click **Open in Cursor** from the copy page menu, or paste a markdown URL directly:
+
+```text
+Read https://docsly.sh/llms.md/docs/installation/content.md and help me set up the project.
+```
+
+### ChatGPT / Claude
+
+Use the share menu links or paste the markdown URL into your prompt. The model can fetch the raw markdown content.
+
+### Custom integrations
+
+Fetch markdown programmatically:
+
+```bash
+curl https://docsly.sh/llms-full.txt > docs.txt
+```
+
+Or fetch a single page:
+
+```bash
+curl https://docsly.sh/llms.md/docs/guides/markdown/content.md
+```
+
+<Callout type="info" title="Static generation">
+
+LLM export routes are statically generated at build time alongside the docs pages. No server-side processing is needed at request time.
+
+</Callout>

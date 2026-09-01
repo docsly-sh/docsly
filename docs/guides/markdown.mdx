@@ -1,0 +1,128 @@
+---
+title: Markdown & MDX
+description: Explore the MDX components available in this docs site.
+---
+
+This page showcases the MDX components you can use when writing documentation.
+
+## Headings
+
+Use `##` for sections and `###` for subsections. Each heading automatically appears in the table of contents on the right.
+
+## Text formatting
+
+You can use **bold**, _italic_, and `inline code`. Links work too — like [Fumadocs](https://fumadocs.dev).
+
+## Lists
+
+Unordered list:
+
+- First item
+- Second item
+- Third item
+
+Ordered list:
+
+1. Step one
+2. Step two
+3. Step three
+
+## Code blocks
+
+```bash
+pnpm install
+pnpm dev
+```
+
+```tsx title="components/example.tsx"
+export function Example({ title }: { title: string }) {
+  return <h1>{title}</h1>;
+}
+```
+
+## Callouts
+
+<Callout type="info">
+
+This is an info callout. Use it for helpful tips and context.
+
+</Callout>
+
+<Callout type="warning" title="Warning">
+
+This is a warning callout. Use it for important cautions.
+
+</Callout>
+
+## Tabs
+
+<Tabs defaultValue="pnpm">
+
+<TabsList>
+  <TabsTrigger value="pnpm">pnpm</TabsTrigger>
+  <TabsTrigger value="npm">npm</TabsTrigger>
+  <TabsTrigger value="yarn">yarn</TabsTrigger>
+</TabsList>
+
+<TabsContent value="pnpm">
+
+```bash
+pnpm install
+pnpm dev
+```
+
+</TabsContent>
+
+<TabsContent value="npm">
+
+```bash
+npm install
+npm run dev
+```
+
+</TabsContent>
+
+<TabsContent value="yarn">
+
+```bash
+yarn install
+yarn dev
+```
+
+</TabsContent>
+
+</Tabs>
+
+## Accordion
+
+<Accordion type="single" collapsible>
+
+<AccordionItem value="item-1">
+<AccordionTrigger>What is MDX?</AccordionTrigger>
+<AccordionContent>
+
+MDX lets you write JSX inside Markdown. You can import and use React components directly in your `.mdx` files.
+
+</AccordionContent>
+</AccordionItem>
+
+<AccordionItem value="item-2">
+<AccordionTrigger>How does syntax highlighting work?</AccordionTrigger>
+<AccordionContent>
+
+Code blocks are highlighted with Shiki via `rehype-pretty-code`. Add a language tag after the opening fence, like ` ```tsx `.
+
+</AccordionContent>
+</AccordionItem>
+
+</Accordion>
+
+## Tables
+
+| Feature           | Supported |
+| ----------------- | --------- |
+| Sidebar nav       | Yes       |
+| Table of contents | Yes       |
+| Search (⌘K)       | Yes       |
+| LLM exports       | Yes       |
+| Dark mode         | Yes       |

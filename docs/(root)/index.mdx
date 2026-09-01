@@ -1,0 +1,73 @@
+---
+title: Introduction
+description: Open-source documentation for Next.js — fast, beautiful, and ready to customize.
+---
+
+**docsly.sh** is an open-source documentation starter built on [Next.js](https://nextjs.org) and [Fumadocs](https://fumadocs.dev). Fork it, write your content in MDX, and ship a polished docs site in minutes.
+
+It includes everything you need out of the box: sidebar navigation, table of contents, dark mode, full-text search, LLM-friendly exports, and a library of MDX components.
+
+## Why docsly?
+
+Most documentation projects spend weeks wiring up navigation, search, theming, and MDX before writing a single page. docsly gives you a production-ready foundation so you can focus on content.
+
+| | docsly | Rolling your own |
+| --- | --- | --- |
+| Time to first page | Minutes | Days or weeks |
+| Search | Built-in (⌘K) | Build or integrate |
+| LLM exports | `/llms.md` routes | Manual |
+| Dark mode | Included | Custom CSS |
+| MDX components | Callouts, tabs, steps, accordions | Build each one |
+
+## Features
+
+- **Sidebar navigation** with prev/next links and section shortcuts
+- **Table of contents** on every page, with a mobile dropdown
+- **Dark mode** with system preference detection
+- **Full-text search** via ⌘K (or Ctrl+K)
+- **LLM exports** — per-page and full-site markdown at `/llms.md/docs/...` and `/llms-full.txt`
+- **Share menu** — copy markdown, open in ChatGPT, Claude, Cursor, and more
+- **MDX components** — callouts, tabs, accordions, steps, and syntax-highlighted code blocks
+- **SEO-ready** — per-page metadata, Open Graph images, and canonical URLs
+
+## Tech stack
+
+- [Next.js 16](https://nextjs.org) with App Router
+- [Fumadocs](https://fumadocs.dev) for MDX content and page trees
+- [Tailwind CSS 4](https://tailwindcss.com) for styling
+- [shadcn/ui](https://ui.shadcn.com) + Radix UI for components
+- [Shiki](https://shiki.style) for syntax highlighting
+
+## Quick start
+
+<Steps>
+
+<Step>Clone the repository</Step>
+
+```bash
+git clone https://github.com/docsly-sh/docsly.git
+cd docsly
+pnpm install
+```
+
+<Step>Start the dev server</Step>
+
+```bash
+pnpm dev
+```
+
+<Step>Open the docs</Step>
+
+Visit [http://localhost:3000/docs](http://localhost:3000/docs) in your browser.
+
+</Steps>
+
+See the full [installation guide](/docs/installation) for prerequisites, project structure, and how to add pages.
+
+## What's next?
+
+- [Features](/docs/features) — everything included in the starter
+- [Architecture](/docs/architecture) — how the project is organized
+- [Customizing](/docs/guides/customizing) — make it yours
+- [Deployment](/docs/deployment) — ship to Vercel or any host
+- [Contributing](/docs/contributing) — help improve docsly

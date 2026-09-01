@@ -1,0 +1,31 @@
+---
+title: Components
+description: Reference for MDX components available in your documentation pages.
+---
+
+docsly includes a library of MDX components for writing rich documentation. Use them directly in `.mdx` files — no imports required.
+
+## Categories
+
+- **[Content](/docs/components/content/callout)** — Callouts and code blocks
+- **[Interactive](/docs/components/interactive/tabs)** — Tabs, accordions, and steps
+
+## Quick reference
+
+| Component | Best for | Docs |
+| --- | --- | --- |
+| `<Callout>` | Tips, warnings, notes | [Callout](/docs/components/content/callout) |
+| Code blocks | Syntax-highlighted code | [Code blocks](/docs/components/content/code-blocks) |
+| `<Tabs>` | Package managers, variants | [Tabs](/docs/components/interactive/tabs) |
+| `<Accordion>` | FAQs, optional detail | [Accordion](/docs/components/interactive/accordion) |
+| `<Steps>` | Setup guides, tutorials | [Steps](/docs/components/interactive/steps) |
+
+## Quick example
+
+<Callout type="info" title="Available everywhere">
+
+Any MDX page can use `<Callout>`, `<Tabs>`, `<Accordion>`, and `<Steps>` without importing them. They are registered globally in `src/mdx-components.tsx`.
+
+</Callout>
+
+See the [Markdown & MDX guide](/docs/guides/markdown) for a full showcase of every component in context, or the [MDX configuration](/docs/configuration/mdx) page to add your own components.

@@ -1,0 +1,43 @@
+---
+title: Accordion
+description: Collapsible sections for FAQs and optional detail.
+---
+
+Accordions keep long pages scannable by hiding secondary content until expanded.
+
+## Example
+
+<Accordion type="single" collapsible>
+
+<AccordionItem value="faq-1">
+<AccordionTrigger>Can I use custom React components?</AccordionTrigger>
+<AccordionContent>
+
+Yes. Register them in `src/mdx-components.tsx` and use them in any `.mdx` file.
+
+</AccordionContent>
+</AccordionItem>
+
+<AccordionItem value="faq-2">
+<AccordionTrigger>Do accordions work on mobile?</AccordionTrigger>
+<AccordionContent>
+
+Yes. They use Radix UI primitives with full keyboard and touch support.
+
+</AccordionContent>
+</AccordionItem>
+
+</Accordion>
+
+## Syntax
+
+```mdx
+<Accordion type="single" collapsible>
+  <AccordionItem value="item-1">
+    <AccordionTrigger>Question</AccordionTrigger>
+    <AccordionContent>Answer</AccordionContent>
+  </AccordionItem>
+</Accordion>
+```
+
+Use unique `value` strings for each item.

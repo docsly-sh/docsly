@@ -1,0 +1,60 @@
+---
+title: Navigation
+description: Configure header links, sidebar sections, and page ordering.
+---
+
+Navigation is split between content-driven page trees and a small set of constants.
+
+## Top-level sections
+
+Sidebar section shortcuts are defined in `src/constants/docs-sections.ts`:
+
+```ts title="src/constants/docs-sections.ts"
+export const DOCS_SECTIONS = [
+  { href: ROUTES.DOCS, match: "exact", name: "Introduction" },
+  { href: ROUTES.DOCS_INSTALLATION, match: "prefix", name: "Installation" },
+  // ...
+];
+```
+
+Each entry appears under **Sections** in the sidebar. Use `match: "exact"` for the docs home route so `/docs/guides` does not highlight Introduction.
+
+## Header navigation
+
+Header links are in the same file:
+
+```ts
+export const HEADER_NAV_ITEMS = [
+  { href: ROUTES.DOCS, label: "Docs" },
+  { href: ROUTES.DOCS_GUIDES, label: "Guides" },
+  // ...
+];
+```
+
+## Page tree from meta.json
+
+Section folders and page order come from `meta.json` files:
+
+```json title="content/docs/meta.json"
+{
+  "root": true,
+  "pages": ["(root)", "guides", "configuration", "components"]
+}
+```
+
+Each folder has its own `meta.json`:
+
+```json title="content/docs/guides/meta.json"
+{
+  "title": "Guides",
+  "pages": ["index", "markdown", "writing"]
+}
+```
+
+## Hidden sidebar folders
+
+Some folders are excluded from the automatic page tree because they appear as top-level sections. See `EXCLUDED_SECTIONS` in `src/lib/docs.ts`.
+
+## New page badges
+
+Add a page URL to `PAGES_NEW` in `src/lib/docs.ts` to show a blue dot next to it in the sidebar.

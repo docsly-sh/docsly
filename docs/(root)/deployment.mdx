@@ -1,0 +1,79 @@
+---
+title: Deployment
+description: Deploy your docsly site to Vercel, Netlify, or any Next.js host.
+---
+
+docsly is a standard Next.js application. Deploy it anywhere that supports Next.js 16.
+
+## Build locally
+
+Verify the production build before deploying:
+
+```bash
+pnpm build
+pnpm start
+```
+
+Open [http://localhost:3000](http://localhost:3000) and spot-check a few pages, search, and dark mode.
+
+## Deploy to Vercel
+
+The recommended path for Next.js apps:
+
+<Steps>
+
+<Step>Push to Git</Step>
+
+Push your repository to GitHub, GitLab, or Bitbucket.
+
+<Step>Import in Vercel</Step>
+
+Go to [vercel.com](https://vercel.com), import the project, and use the default settings:
+
+- **Build command:** `pnpm build`
+- **Install command:** `pnpm install`
+- **Output:** handled automatically by Next.js
+
+<Step>Set environment variables (optional)</Step>
+
+Vercel sets `VERCEL_PROJECT_PRODUCTION_URL` automatically. Override with `SITE_URL` if needed.
+
+</Steps>
+
+## Environment variables
+
+| Variable | Purpose |
+| --- | --- |
+| `SITE_URL` | Canonical site URL when not on Vercel (e.g. `https://docsly.sh`) |
+| `VERCEL_PROJECT_PRODUCTION_URL` | Set automatically on Vercel |
+
+These power Open Graph metadata, canonical URLs, and LLM export links via `src/constants/site.ts`.
+
+## Custom domain
+
+1. Add your domain in your hosting provider's dashboard
+2. Set `SITE_URL` to your production URL
+3. Update `SITE.NAME` in `src/constants/site.ts` to match your brand
+
+## Other platforms
+
+Any host that supports Next.js works:
+
+- **Netlify** — use the Next.js runtime plugin
+- **Cloudflare Pages** — supports Next.js via `@cloudflare/next-on-pages`
+- **Docker** — build with `pnpm build && pnpm start` on Node 20+
+- **Self-hosted** — run `pnpm build && pnpm start` behind nginx or Caddy
+
+<Callout type="info" title="Static export">
+
+docsly uses static generation by default. All docs pages are pre-rendered at build time for fast page loads and simple hosting.
+
+</Callout>
+
+## Post-deploy checklist
+
+- [ ] `SITE_URL` points to your production domain
+- [ ] `SITE.NAME` and descriptions match your project
+- [ ] `/og.png` displays correctly when sharing links
+- [ ] Search (⌘K) returns results
+- [ ] `/llms-full.txt` exports the full docs site

@@ -1,0 +1,122 @@
+---
+title: Architecture
+description: How docsly is organized — content, routing, and rendering.
+---
+
+docsly separates **content** (MDX files) from **application code** (Next.js). This page explains how the pieces fit together.
+
+## Overview
+
+```text
+content/docs/*.mdx          →  Fumadocs MDX compiler  →  .source/ (generated)
+                                                              ↓
+src/lib/source.ts (loader)  →  Page tree + static params  →  Next.js pages
+```
+
+At build time, Fumadocs reads every MDX file in `content/docs/`, compiles it, and generates a typed source map in `.source/`. The Next.js app imports this source to render pages, build the sidebar, and power search.
+
+## Content layer
+
+### MDX files
+
+All documentation lives in `content/docs/`. Each `.mdx` file has YAML frontmatter:
+
+```mdx
+---
+title: Page title
+description: Used in sidebar, search, and SEO.
+---
+
+Page content here.
+```
+
+### meta.json
+
+Folder-level `meta.json` files control the sidebar structure:
+
+```json
+{
+  "title": "Guides",
+  "pages": ["index", "markdown", "writing"]
+}
+```
+
+The root `content/docs/meta.json` defines top-level sections:
+
+```json
+{
+  "root": true,
+  "pages": ["(root)", "guides", "configuration", "components"]
+}
+```
+
+Parentheses like `(root)` are Fumadocs conventions for route groups that don't appear in the URL.
+
+## Application layer
+
+### Routing
+
+| Route | File | Purpose |
+| --- | --- | --- |
+| `/` | `src/app/(app)/(root)/page.tsx` | Redirects to `/docs` |
+| `/docs/[[...slug]]` | `src/app/(app)/docs/[[...slug]]/page.tsx` | Renders any docs page |
+| `/api/search` | `src/app/api/search/route.ts` | Search index API |
+| `/llms.md/docs/...` | `src/app/llms.md/docs/[[...slug]]/route.ts` | Per-page markdown export |
+| `/llms-full.txt` | `src/app/llms-full.txt/route.ts` | Full-site markdown export |
+
+All docs pages are statically generated at build time (`force-static`).
+
+### Source loader
+
+`src/lib/source.ts` wraps the Fumadocs loader:
+
+```ts
+export const source = loader({
+  baseUrl: ROUTES.DOCS,
+  source: docs.toFumadocsSource(),
+});
+```
+
+This provides `source.getPage()`, `source.pageTree`, `source.generateParams()`, and LLM export helpers.
+
+### MDX components
+
+Global components available in every `.mdx` file are registered in `src/mdx-components.tsx`. This includes callouts, tabs, accordions, steps, and styled HTML elements (headings, tables, code blocks).
+
+To add a new component, register it in `mdxComponents` and it becomes available everywhere without imports.
+
+### Layout
+
+The docs layout (`src/app/(app)/docs/layout.tsx`) renders:
+
+1. **Site header** — logo, nav links, search, theme toggle
+2. **Sidebar** — page tree from Fumadocs
+3. **Page content** — MDX body with toolbar and TOC
+4. **Footer** — prev/next navigation
+
+## Configuration files
+
+| File | Purpose |
+| --- | --- |
+| `source.config.ts` | Fumadocs MDX options (syntax highlighting, frontmatter schema) |
+| `src/constants/site.ts` | Site name, URL, and SEO defaults |
+| `src/constants/theme.ts` | Color presets, hues, and browser chrome colors |
+| `src/constants/docs-sections.ts` | Sidebar section shortcuts and header nav |
+| `src/constants/routes.ts` | Centralized route paths |
+| `src/lib/docs.ts` | Docs directory path, excluded sections, new-page badges |
+| `next.config.mjs` | Next.js + Fumadocs MDX plugin |
+
+## Build pipeline
+
+```bash
+pnpm install    # Runs fumadocs-mdx (generates .source/)
+pnpm dev        # Starts Next.js dev server with hot reload
+pnpm build      # Static generation of all docs pages
+pnpm typecheck  # TypeScript validation
+```
+
+<Callout type="info" title="Restart after content changes">
+
+When you add or remove MDX files or change `meta.json`, restart the dev server. Fumadocs regenerates the page tree on startup.
+
+</Callout>

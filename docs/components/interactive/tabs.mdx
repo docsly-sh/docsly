@@ -1,0 +1,51 @@
+---
+title: Tabs
+description: Switch between related content like package manager commands.
+---
+
+Tabs are useful when showing equivalent commands or configuration for different tools.
+
+## Example
+
+<Tabs defaultValue="pnpm">
+
+<TabsList>
+  <TabsTrigger value="pnpm">pnpm</TabsTrigger>
+  <TabsTrigger value="npm">npm</TabsTrigger>
+  <TabsTrigger value="yarn">yarn</TabsTrigger>
+</TabsList>
+
+<TabsContent value="pnpm">
+
+```bash
+pnpm install
+pnpm dev
+```
+
+</TabsContent>
+
+<TabsContent value="npm">
+
+```bash
+npm install
+npm run dev
+```
+
+</TabsContent>
+
+<TabsContent value="yarn">
+
+```bash
+yarn install
+yarn dev
+```
+
+</TabsContent>
+
+</Tabs>
+
+## Syntax
+
+Wrap tab panels in `<Tabs>`, list triggers in `<TabsList>`, and put content in `<TabsContent value="...">` blocks. Set `defaultValue` on `<Tabs>` to the tab that should be open on first render.
+
+See the example above or the [Markdown & MDX guide](/docs/guides/markdown) for a full copy-paste template.

@@ -1,0 +1,122 @@
+---
+title: Customizing
+description: Rebrand and configure docsly for your own project.
+---
+
+docsly is designed to be forked and customized. This guide walks through the key changes to make it yours.
+
+## Rebrand the site
+
+<Steps>
+
+<Step>Update site constants</Step>
+
+Edit `src/constants/site.ts`:
+
+```ts
+export const SITE = {
+  NAME: "your-project.sh",
+  SHORT_NAME: "YourProject",
+  DESCRIPTION: {
+    SHORT: "Your tagline",
+    LONG: "A longer description for SEO and social sharing.",
+  },
+  KEYWORDS: ["your-project", "documentation"],
+  // ...
+};
+```
+
+<Step>Update the web manifest</Step>
+
+Edit `public/site.webmanifest` to match your name and description.
+
+<Step>Replace assets</Step>
+
+Swap these files in `public/`:
+
+| File | Purpose |
+| --- | --- |
+| `logo.svg` | Header logo |
+| `og.png` | Open Graph preview image (1200×630 recommended) |
+| `favicon.svg`, `favicon.ico`, `favicon-*.png` | Browser tab icons |
+| `apple-touch-icon.png` | iOS home screen icon |
+
+<Step>Update package.json</Step>
+
+Change `name`, `description`, `repository`, and `homepage` to match your project.
+
+</Steps>
+
+## Customize navigation
+
+### Header links
+
+Edit `HEADER_NAV_ITEMS` in `src/constants/docs-sections.ts`:
+
+```ts
+export const HEADER_NAV_ITEMS = [
+  { href: ROUTES.DOCS, label: "Docs" },
+  { href: ROUTES.DOCS_GUIDES, label: "Guides" },
+  // Add or remove links
+];
+```
+
+### Sidebar sections
+
+Edit `DOCS_SECTIONS` in the same file to control the section shortcuts in the sidebar.
+
+### Page tree
+
+Reorganize `content/docs/meta.json` and section-level `meta.json` files to match your documentation structure. Add, remove, or rename folders as needed.
+
+## Replace the content
+
+The default docs document docsly itself. For your project:
+
+1. Clear or rewrite pages in `content/docs/(root)/`
+2. Replace guides with your own content
+3. Remove the configuration and components sections if you don't need them
+4. Update `content/docs/meta.json` to reflect your new structure
+
+<Callout type="warning" title="Keep the structure">
+
+You don't need to keep docsly's default pages. Delete any section you don't need and update the corresponding `meta.json` files.
+
+</Callout>
+
+## Add custom pages
+
+Create new MDX files and register them in the appropriate `meta.json`. See the [installation guide](/docs/installation#add-a-new-page) for step-by-step instructions.
+
+## Add custom components
+
+Register new React components in `src/mdx-components.tsx`:
+
+```ts
+export const mdxComponents = {
+  // ...existing components
+  MyComponent: ({ children }) => <div className="my-style">{children}</div>,
+};
+```
+
+They become available in every `.mdx` file without imports. See [MDX configuration](/docs/configuration/mdx) for details.
+
+## Customize styling
+
+### Color scheme
+
+Change the site palette in `src/constants/theme.ts`:
+
+```ts
+export const ACTIVE_COLOR_PRESET: ColorPreset = "violet";
+```
+
+Available presets: `stone`, `zinc`, `slate`, `blue`, `violet`, `green`, `rose`. See the [Colors guide](/docs/configuration/colors) for details.
+
+### CSS tokens
+
+For fine-grained control, edit semantic color tokens in `src/styles/theme.css`. Theme tokens flow into Tailwind utilities like `bg-background` and `text-muted-foreground`.
+
+## External links
+
+Add links to your GitHub repo, Discord, or other resources by editing the header nav or adding a footer component.

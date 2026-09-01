@@ -1,0 +1,34 @@
+---
+title: Configuration
+description: Customize site metadata, navigation, MDX components, and content settings.
+---
+
+This section covers every configuration point in docsly. Most changes require editing a single file — no complex setup.
+
+## What you can configure
+
+- **[Site settings](/docs/configuration/site-settings)** — Name, description, SEO metadata
+- **[Colors](/docs/configuration/colors)** — Presets and custom color schemes
+- **[Navigation](/docs/configuration/navigation)** — Header links, sidebar sections, and page ordering
+- **[MDX components](/docs/configuration/mdx)** — Global components available in every page
+
+## Key files
+
+| File | Purpose |
+| ---- | ------- |
+| `src/constants/site.ts` | Site name, URL, and SEO defaults |
+| `src/constants/docs-sections.ts` | Top-level sidebar and header nav |
+| `src/constants/routes.ts` | Centralized route path constants |
+| `content/docs/meta.json` | Root page tree and section order |
+| `src/mdx-components.tsx` | Global MDX component registry |
+| `source.config.ts` | MDX processing and frontmatter schema |
+
+## Content-driven navigation
+
+Page order and section titles come from `meta.json` files inside `content/docs/`. Fumadocs reads these at build time and generates the sidebar automatically — no manual route registration required.
+
+<Callout type="info">
+
+After changing `meta.json` or adding new MDX files, restart the dev server so Fumadocs regenerates the page tree.
+
+</Callout>

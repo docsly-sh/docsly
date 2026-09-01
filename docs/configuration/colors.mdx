@@ -1,0 +1,129 @@
+---
+title: Colors
+description: Change the docs color scheme with presets or custom overrides.
+---
+
+docsly uses a preset-based color system. Switch the entire site palette by changing one line, or fine-tune individual hues.
+
+## Quick start
+
+Open `src/constants/theme.ts` and change the active preset:
+
+```ts title="src/constants/theme.ts"
+/** Switch palettes here — stone | zinc | slate | blue | violet | green | rose */
+export const ACTIVE_COLOR_PRESET: ColorPreset = "blue";
+```
+
+Save the file and refresh. Light mode, dark mode, sidebar, code blocks, and browser chrome colors all update together.
+
+## Built-in presets
+
+| Preset | Character | Best for |
+| --- | --- | --- |
+| `stone` | Warm neutral with blue accents | Default — clean and readable |
+| `zinc` | Cool neutral gray | Minimal, technical docs |
+| `slate` | Blue-gray | Developer tools, APIs |
+| `blue` | Blue throughout | SaaS products, cloud services |
+| `violet` | Purple tones | Creative tools, design systems |
+| `green` | Green tones | Environmental, health, finance |
+| `rose` | Warm red-pink | Consumer apps, lifestyle |
+
+Each preset defines three values:
+
+| Property | Controls |
+| --- | --- |
+| `hue` | Neutral palette — backgrounds, text, borders, sidebar |
+| `accentHue` | Brand accents — charts, active sidebar items, highlights |
+| `meta` | Browser chrome colors (`theme-color` meta tag) |
+
+## Override a single value
+
+Use `COLOR_OVERRIDES` to tweak the active preset without creating a new one:
+
+```ts title="src/constants/theme.ts"
+export const ACTIVE_COLOR_PRESET: ColorPreset = "stone";
+
+export const COLOR_OVERRIDES = {
+  accentHue: 200, // Teal accents on stone neutrals
+};
+```
+
+Overrides are merged on top of the active preset at build time.
+
+## Create a custom preset
+
+Add a new entry to `COLOR_PRESETS`:
+
+```ts title="src/constants/theme.ts"
+export const COLOR_PRESETS = {
+  // ...existing presets
+  brand: {
+    hue: 30,
+    accentHue: 30,
+    radius: "0.5rem",
+    meta: { light: "#fffaf5", dark: "#1a0f00" },
+  },
+} as const;
+
+export const ACTIVE_COLOR_PRESET: ColorPreset = "brand";
+```
+
+## How it works
+
+Colors are defined as CSS custom properties in `src/styles/theme.css` using two hue variables:
+
+```css
+--background: oklch(0.993 0.002 var(--theme-hue));
+--chart-1: oklch(0.82 0.1 var(--theme-accent-hue));
+```
+
+The active preset's hue values are injected on the `<html>` element via `getThemeCssVariables()` in `src/app/layout.tsx`. Tailwind maps these to utility classes like `bg-background` and `text-muted-foreground`.
+
+```text
+src/constants/theme.ts   →  preset hue values
+        ↓
+src/app/layout.tsx       →  --theme-hue, --theme-accent-hue on <html>
+        ↓
+src/styles/theme.css     →  full light/dark palettes
+        ↓
+Tailwind utilities       →  bg-background, text-primary, etc.
+```
+
+## Fine-grained control
+
+For full control beyond presets, edit `src/styles/theme.css` directly. Every semantic token is listed for both `:root` (light) and `.dark`:
+
+| Token | Used for |
+| --- | --- |
+| `--background` / `--foreground` | Page background and body text |
+| `--primary` | Buttons, active links |
+| `--muted` / `--muted-foreground` | Subtle backgrounds, secondary text |
+| `--accent` | Hover states, highlights |
+| `--border` / `--input` / `--ring` | Borders, form fields, focus rings |
+| `--sidebar-*` | Sidebar navigation |
+| `--code-*` | Code block backgrounds and line numbers |
+| `--chart-*` | Chart colors (if used) |
+
+Colors use the [OKLCH](https://oklch.com) color space for perceptually uniform lightness across hues.
+
+## Border radius
+
+Change corner rounding via the preset's `radius` value or override it:
+
+```ts
+export const COLOR_OVERRIDES = {
+  radius: "0.75rem",
+};
+```
+
+This sets `--radius`, which flows into `--radius-sm`, `--radius-md`, `--radius-lg`, and `--radius-xl`.
+
+## Browser chrome
+
+Mobile browser address bars use the `meta` colors from the active preset. These are exported as `META_THEME_COLORS` and applied in `src/app/layout.tsx` and `src/hooks/use-meta-color.ts`.
+
+<Callout type="info" title="Dark mode is separate">
+
+Color presets control the palette. Light/dark mode switching is handled by the theme provider (`src/components/theme-provider.tsx`) and toggles the `.dark` class on `<html>`.
+
+</Callout>
