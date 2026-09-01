@@ -19,7 +19,7 @@ const ScrollArea = ({
   >
     <ScrollAreaPrimitive.Viewport
       ref={viewportRef}
-      className="size-full rounded-[inherit] [&>div]:block!"
+      className="size-full overscroll-y-contain rounded-[inherit] [&>div]:block!"
     >
       {children}
     </ScrollAreaPrimitive.Viewport>

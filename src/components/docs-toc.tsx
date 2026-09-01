@@ -1,7 +1,15 @@
 "use client";
 
 import { List } from "@phosphor-icons/react";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 
 import {
   docsToolbarButtonClass,
@@ -20,36 +28,65 @@ import { cn } from "@/lib/utils";
 const headingById = (id: string): Element | null =>
   document.querySelector(`#${CSS.escape(id)}`);
 
+const DocsTocActiveContext = createContext<string | null>(null);
+
+export const DocsTocProvider = ({
+  itemIds,
+  children,
+}: {
+  itemIds: string[];
+  children: React.ReactNode;
+}) => {
+  const activeHeading = useActiveItem(itemIds);
+
+  return (
+    <DocsTocActiveContext.Provider value={activeHeading}>
+      {children}
+    </DocsTocActiveContext.Provider>
+  );
+};
+
+const useDocsTocActive = () => useContext(DocsTocActiveContext);
+
 const useActiveItem = (itemIds: string[]) => {
   const [activeId, setActiveId] = useState<string | null>(null);
   const scrollContainer = useDocsScrollContainer();
-  const visibleHeadings = useRef<Map<string, number>>(new Map());
+  const visibleHeadings = useRef<Set<string>>(new Set());
+  const rafId = useRef<number | null>(null);
 
   useEffect(() => {
-    const updateActiveHeading = () => {
-      const sorted = [...visibleHeadings.current.entries()].sort(
-        (a, b) => a[1] - b[1]
-      );
+    if (!scrollContainer) {
+      return;
+    }
 
-      if (sorted.length > 0) {
-        setActiveId(sorted[0][0]);
+    const updateActiveHeading = () => {
+      rafId.current = null;
+
+      const nextId =
+        itemIds.find((id) => id && visibleHeadings.current.has(id)) ?? null;
+
+      setActiveId((current) => (current === nextId ? current : nextId));
+    };
+
+    const scheduleUpdate = () => {
+      if (rafId.current !== null) {
+        return;
       }
+
+      rafId.current = requestAnimationFrame(updateActiveHeading);
     };
 
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
           if (entry.isIntersecting) {
-            visibleHeadings.current.set(
-              entry.target.id,
-              entry.boundingClientRect.top
-            );
+            visibleHeadings.current.add(entry.target.id);
           } else {
             visibleHeadings.current.delete(entry.target.id);
           }
         }
 
-        updateActiveHeading();
+        scheduleUpdate();
       },
       {
         root: scrollContainer,
@@ -57,10 +94,11 @@ const useActiveItem = (itemIds: string[]) => {
       }
     );
 
-    for (const id of itemIds ?? []) {
+    for (const id of itemIds) {
       if (!id) {
         continue;
       }
+
       const element = headingById(id);
       if (element) {
         observer.observe(element);
@@ -68,6 +106,10 @@ const useActiveItem = (itemIds: string[]) => {
     }
 
     return () => {
+      if (rafId.current !== null) {
+        cancelAnimationFrame(rafId.current);
+      }
+
       visibleHeadings.current.clear();
       observer.disconnect();
     };
@@ -127,11 +169,7 @@ export const DocsTableOfContents = ({
 }) => {
   const [open, setOpen] = useState(false);
   const handleClose = useCallback(() => setOpen(false), []);
-  const itemIds = useMemo(
-    () => toc.map((item) => item.url.replace("#", "")),
-    [toc]
-  );
-  const activeHeading = useActiveItem(itemIds);
+  const activeHeading = useDocsTocActive();
 
   if (!toc?.length) {
     return null;

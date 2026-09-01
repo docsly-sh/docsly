@@ -39,7 +39,10 @@ const SidebarMenuItemLink = ({
         {children}
         {PAGES_NEW.includes(href) ? (
           <>
-            <span className="bg-chart-2 flex size-2 rounded-full" aria-hidden />
+            <span
+              className="bg-muted-foreground/70 flex size-1.5 shrink-0 rounded-full"
+              aria-hidden
+            />
             <span className="sr-only">New</span>
           </>
         ) : null}
